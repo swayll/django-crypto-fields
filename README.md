@@ -1,5 +1,5 @@
 # django-crypto-fields
-Collection fo crypto fileds crypt and decrypt **on the fly** with [Fernet (symmetric encryption)](https://cryptography.io/en/latest/fernet/).
+Collection of crypto fileds for django framework working **on the fly** with [Fernet (symmetric encryption)](https://cryptography.io/en/latest/fernet/).
 
 **Import** fields collection to your models
 ```python
