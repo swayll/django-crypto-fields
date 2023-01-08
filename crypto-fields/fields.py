@@ -2,7 +2,8 @@ from django.db import models
 from cryptography.fernet import Fernet
 from django.utils.dateparse import parse_date
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
+
+CRYPTO_KEY = b'99lectrHf-urwE8CEXAqCf2UofCb-K-rEiT_VdRWhXY='
 
 class CryptoDateField(models.DateField):
 
@@ -21,7 +22,7 @@ class CryptoDateField(models.DateField):
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
         if value is not None:
-            return connection.Database.Binary(settings.CYPHER.encrypt(str(value).encode('utf-8')))
+            return connection.Database.Binary(Fernet(CRYPTO_KEY).encrypt(str(value).encode('utf-8')))
         return value
 
 class CryptoPositiveSmallIntegerField(models.PositiveSmallIntegerField):
@@ -40,7 +41,7 @@ class CryptoPositiveSmallIntegerField(models.PositiveSmallIntegerField):
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
         if value is not None:
-            return connection.Database.Binary(settings.CYPHER.encrypt(str(value).encode('utf-8')))
+            return connection.Database.Binary(Fernet(CRYPTO_KEY).encrypt(str(value).encode('utf-8')))
         return value
 
 class CryptoPositiveIntegerField(models.PositiveIntegerField):
@@ -59,7 +60,7 @@ class CryptoPositiveIntegerField(models.PositiveIntegerField):
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
         if value is not None:
-            return connection.Database.Binary(settings.CYPHER.encrypt(str(value).encode('utf-8')))
+            return connection.Database.Binary(Fernet(CRYPTO_KEY).encrypt(str(value).encode('utf-8')))
         return value
 
 
@@ -79,7 +80,7 @@ class CryptoCharField(models.CharField):
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
         if value is not None:
-            return connection.Database.Binary(settings.CYPHER.encrypt(str(value).encode('utf-8')))
+            return connection.Database.Binary(Fernet(CRYPTO_KEY).encrypt(str(value).encode('utf-8')))
         return value
 
 class CryptoTextField(models.TextField):
@@ -98,5 +99,5 @@ class CryptoTextField(models.TextField):
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
         if value is not None:
-            return connection.Database.Binary(settings.CYPHER.encrypt(str(value).encode('utf-8')))
+            return connection.Database.Binary(Fernet(CRYPTO_KEY).encrypt(str(value).encode('utf-8')))
         return value
